@@ -4,7 +4,6 @@
 
 int main() {
     unordered_map<string, int> wires;
-    unordered_map<int, bool> marked;
 
     // Careful with CRLF vs LF
     FILE *input = fopen("input", "r");
@@ -14,6 +13,7 @@ int main() {
     vector<vector<string>> processed;
 
     while (fgets(line, MAX_SIZE, input)) {
+        // This also means that the input should end with at least a blank line
         line[strlen(line) - 1] = '\0';
 
         if (strchr(line, ':') != NULL) {
@@ -42,8 +42,6 @@ int main() {
             string w3 = p;
 
             processed.push_back({w1, gate, w2, w3});
-
-            cout << w1 << " " << gate << " " << w2 << " -> " << w3 << endl;
         }
     }
 
@@ -68,12 +66,9 @@ int main() {
     } while (!processed.empty());
 
     vector<string> keys;
-    for (const auto& [k, _] : wires) {
+    for (const auto& [k, _] : wires)
         if (k[0] == 'z')
             keys.push_back(k);
-
-        cout << "Value of " << k << " is " << _ << endl;
-    }
 
     sort(keys.begin(), keys.end());
 
